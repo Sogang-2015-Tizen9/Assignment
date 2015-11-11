@@ -19,14 +19,25 @@
 <script type="text/javascript" src="./js/googleMaps/googleLocation.js"></script>
 <script type="text/javascript" src="./js/googleMaps/googleDistance.js"></script>
 <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBSoT1wqRczujvxKtreO6O7a4RJ-GF61o4&sensor=true"></script>
+
 <script type="text/javascript">
-	$(document).ready(function(){
-		googleLocation.initialize();
-	});
+	var map;
 </script>
 </head>
 
 <body>
+	<div data-role="popup" class="popup">
+			<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+			<p></p>
+	</div>
+	<script type="text/javascript">
+		$(document).ready(function(){
+            // tlib.view.showPopup('Unable to acquire your location');
+			map = googleLocation.initialize();
+			googleLocation.getCurrentLocation(map);
+		});
+	</script>
 	<div id="map_canvas"></div>
+	<p>20121657 최준민</p>
 </body>
 </html>

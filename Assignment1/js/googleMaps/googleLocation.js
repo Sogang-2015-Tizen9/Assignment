@@ -41,7 +41,7 @@ var googleLocation = (function ($, logger, view, network, ajax) {
             
                 logger.info("South Korea Google Map View");
                 internetConnectionCheck();
-                that.createMapForGivenContainer("map_canvas", {
+                return that.createMapForGivenContainer("map_canvas", {
                     zoom: 6,
                     lat: 37.3359,
                     lon: 126.5840,
@@ -94,7 +94,7 @@ var googleLocation = (function ($, logger, view, network, ajax) {
          * Method that can be used to get current device geolocation according to W3C Geolocation API
          * @returns
          */
-        getCurrentLocation: function () {
+        getCurrentLocation: function (map) {
             logger.info('getCurrentLocation');
             if (navigator && navigator.geolocation && navigator.geolocation.getCurrentPosition) {
                 navigator.geolocation.getCurrentPosition(function (position) {
@@ -103,7 +103,13 @@ var googleLocation = (function ($, logger, view, network, ajax) {
                     if (position.coords.latitude === 0 && position.coords.longitude === 0) {
                         view.showPopup('Unable to acquire your location');
                     } else {
-                        view.showPopup('Latitude: ' + position.coords.latitude + "<br />" + 'Longitude: ' + position.coords.longitude);
+                    	// view.showPopup('Latitude: ' + position.coords.latitude + "<br />" + 'Longitude: ' + position.coords.longitude);
+                    	map.setCenter({lat: position.coords.latitude,
+                    					lng: position.coords.longitude});
+                    	new google.maps.Marker({position: {lat: position.coords.latitude,
+                    										lng: position.coords.longitude},
+                    										map: map}); 
+                    	map.setZoom(18);
                     }
                 }, function (error) {
                     view.hideLoader();
